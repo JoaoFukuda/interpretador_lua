@@ -517,6 +517,6 @@ Lua &Lua::EndScope()
 	{
 		Scope *aux = current_scope;
 		current_scope = current_scope->parent;
-		delete current_scope;
+		delete aux;
 	}
 }

@@ -1,13 +1,21 @@
-void db(){std::cout << "ASDF" << std::endl;}
-
 void Lua::ParseStat()
 {
-	if(BUFFER == "func")
+	if(BUFFER == "function")
 	{
 		ParseBlock();
 	} else if(BUFFER == "while")
 	{
-		ParseBlock();
+		auto loop_begining = code->tellg();
+		while(ParseExp()->type != Variable::lua_nil)
+		{
+			NextWord();
+			ParseBlock();
+			code->seekg(loop_begining, code->beg);
+		}
+
+		do{
+			NextWord();
+		}while(BUFFER != "end");
 	} else if(BUFFER == "if")
 	{
 		Variable *res = ParseExp();
@@ -200,6 +208,7 @@ Variable *Lua::ParseExp()
 		else
 			PutBack();
 	}
+
 
 	return return_variable;
 }
