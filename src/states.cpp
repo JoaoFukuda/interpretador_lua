@@ -61,7 +61,8 @@ void Lua::ParseStat()
 
 VariablesList *Lua::ParseFunctionCall(Variable &var)
 {
-	return (VariablesList *)var(ParseExpList());
+	VariablesList *return_variable = (VariablesList *)var(ParseExpList())
+	return return_variable;
 }
 
 bool Lua::ParseElseif(){
